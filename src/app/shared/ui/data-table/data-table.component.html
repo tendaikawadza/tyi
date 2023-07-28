@@ -1,0 +1,82 @@
+<div [ngClass]="{'justify-end': !filterable, 'justify-between': filterable}"
+     class="w-full flex items-baseline gap-8">
+  <ng-container *ngIf="filterable">
+    <div class="w-full max-w-md">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Filter table</mat-label>
+        <input (keyup)="applyFilter($event)" matInput>
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="downloadable">
+    <div class="flex-shrink-0 flex justify-end items-baseline pb-2">
+      <button (click)="download.emit()" mat-raised-button type="button">
+        <mat-icon>download</mat-icon>
+        Download data
+      </button>
+    </div>
+  </ng-container>
+</div>
+
+<div class="w-full border rounded-md overflow-hidden shadow-sm overflow-x-auto">
+  <mat-table [dataSource]="dataSource.data.length > 0 && dataSource.filteredData.length > 0 ? dataSource : emptyData"
+             class="w-full" mat-table matSort multiTemplateDataRows>
+    <ng-container *ngFor="let col of columns; let i = index">
+      <ng-container [matColumnDef]="col">
+        <mat-header-cell *matHeaderCellDef class="uppercase !text-xs" mat-header-cell mat-sort-header>{{ col | camelparse }}
+        </mat-header-cell>
+        <ng-container [ngSwitch]="columnTypes[i]">
+          <ng-template ngSwitchCase="longtext">
+            <mat-cell *matCellDef="let row" mat-cell>{{ row[col] }}</mat-cell>
+          </ng-template>
+          <ng-template ngSwitchCase="sensitive">
+            <mat-cell *matCellDef="let row" mat-cell>
+              <!--<div *ngIf="auth.sensitive" class="text-lg tracking-widest">*******</div>
+              <div *ngIf="!auth.sensitive" class="line-clamp-2">{{ row[col] }}</div>-->
+            </mat-cell>
+          </ng-template>
+          <ng-template ngSwitchCase="number">
+            <mat-cell *matCellDef="let row" mat-cell>{{ row[col] | number }}</mat-cell>
+          </ng-template>
+          <ng-template ngSwitchCase="currency">
+            <mat-cell *matCellDef="let row" mat-cell>{{ row[col] | currency }}</mat-cell>
+          </ng-template>
+          <ng-template ngSwitchCase="date">
+            <mat-cell *matCellDef="let row" mat-cell>{{ row[col] | date : 'dd/MM/yyyy' }}</mat-cell>
+          </ng-template>
+          <ng-template ngSwitchCase="datetime">
+            <mat-cell *matCellDef="let row" mat-cell>{{ row[col] | date : 'dd/MM/yyyy HH:mm' }}</mat-cell>
+          </ng-template>
+          <ng-template ngSwitchCase="snake">
+            <mat-cell *matCellDef="let row" mat-cell>{{ row[col] | snakeparse | capitalise }}</mat-cell>
+          </ng-template>
+          <ng-template ngSwitchDefault>
+            <mat-cell *matCellDef="let row" mat-cell>
+              <div class="line-clamp-2">{{ row[col] }}</div>
+            </mat-cell>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <ng-container matColumnDef="empty-row">
+      <mat-cell *matCellDef="let row">No data</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columns" mat-header-row></mat-header-row>
+
+    <ng-container *ngIf="!clickable || !dataSource.data.length else canClick">
+      <mat-row
+        *matRowDef="let row; columns: dataSource.data.length > 0 && dataSource.filteredData.length > 0 ? columns : ['empty-row'];"
+        mat-row>
+      </mat-row>
+    </ng-container>
+
+    <ng-template #canClick>
+      <mat-row (click)="clicked.emit(row)"
+               *matRowDef="let row; columns: dataSource.data.length > 0 && dataSource.filteredData.length > 0 ? columns : ['empty-row'];"
+               class="cursor-pointer" mat-row matRipple></mat-row>
+    </ng-template>
+  </mat-table>
+  <mat-paginator aria-label="Select page of records" pageSize="10" showFirstLastButtons></mat-paginator>
+</div>

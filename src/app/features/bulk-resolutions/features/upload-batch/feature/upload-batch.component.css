@@ -1,0 +1,84 @@
+::ng-deep{
+.mat-mdc-dialog-container .mdc-dialog--open{
+    width: 800px;
+}
+}
+
+:host ::ng-deep .p-button {
+    margin: 0 .5rem 0 0;
+    min-width: 10rem;
+}
+
+p {
+    margin: 0;
+}
+
+.confirmation-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:host ::ng-deep .p-dialog .p-button {
+    min-width: 6rem;
+}
+
+.p-dialog .p-dialog-header{
+    background-color: #3f51b5 !important;
+}
+
+
+:host ::ng-deep {
+    .p-dialog {
+        height: calc(100% - 136px);
+        width: 61vw !important;
+    
+    }
+    .p-dialog-draggable .p-dialog-header {
+        background-color: #b5683f !important;
+        color:white;
+        padding: 0.5rem !important;
+    }
+    .p-dialog-title {
+        color: white !important;
+    }
+   
+   
+    .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+        box-shadow: 0 0 0 0.2rem white !important;
+    }
+    button.p-ripple.p-element.p-dialog-header-icon.p-dialog-header-close {
+        color: white !important;
+    }
+    .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+        background: black !important;
+        color: white !important;
+    }
+    .p-button.p-button-text:enabled:hover {
+        background: white !important;
+        color: white !important;
+    }
+    .p-button.p-button-text {
+        color: white !important;
+    }
+   
+}
+
+::ng-deep .p-datepicker table td {
+    padding: 0.2rem !important;
+  }
+  
+  ::ng-deep .p-datepicker table td > span {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+  
+  ::ng-deep .p-datepicker table {
+    font-size: 10pt;
+    margin: -0.143rem 0;
+  }
+  
+  ::ng-deep .p-datepicker .p-datepicker-header {
+    padding: 0.2rem;
+  }
+ 

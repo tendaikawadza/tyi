@@ -1,0 +1,38 @@
+`<mat-list >
+  <ng-container *ngFor="let item of menu">
+    <ng-container *ngIf="item.active">
+      <ng-container *ngIf="!item.subMenu else possibleSubMenu" >
+        <mat-list-item
+          *ngIf="item.title"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="item.link"
+          routerLinkActive="active">
+          <div class="flex items-center gap-1 pl-4">
+            <mat-icon class="text-slate-500 !text-xl !inline-flex !items-center !justify-center">
+              {{ item.icon }}
+            </mat-icon>
+            <div class="text-sm" mat-line>{{ item.title }}</div>
+          </div>
+        </mat-list-item>
+      </ng-container>
+
+      <ng-template #possibleSubMenu>
+        <ng-container *ngIf="item.subMenu!.length > 0">
+          <mat-expansion-panel [expanded]="item.expanded || activeSubMenu(item.subMenu!)">
+            <mat-expansion-panel-header class="!px-4">
+              <mat-panel-title>
+                <div class="flex items-center">
+                  <mat-icon class="!h-8 !w-8 !inline-flex !items-center !justify-center" color="primary">
+                    {{ item.icon }}
+                  </mat-icon>
+                  <div mat-line>{{ item.title }}</div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-menu-item [menu]="item.subMenu!"></app-menu-item>
+          </mat-expansion-panel>
+        </ng-container>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</mat-list>

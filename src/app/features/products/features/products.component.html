@@ -1,0 +1,29 @@
+<h2 class="text-2xl font-medium p-0">Product Details</h2>
+<p>View and search products</p>
+<div class="mt-8">
+  <div class="px-1 pb-1">
+    <mat-card>
+      <mat-card-content>
+        <div class="w-full">
+
+          <ng-container *ngIf="tableData else spinner">
+            <div class="mt-6">
+
+              <zimpayments-data-table [columns]="tableColumns"
+                                      [data]="tableData" [downloadable]="true">
+              </zimpayments-data-table>
+
+            </div>
+          </ng-container>
+
+
+          <ng-template #spinner>
+            <div class="mt-6 flex justify-center">
+              <mat-spinner diameter="50"></mat-spinner>
+            </div>
+          </ng-template>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

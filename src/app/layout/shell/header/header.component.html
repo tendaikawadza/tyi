@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+  <button (click)="menuToggled.emit(true)" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="w-full flex items-center justify-between">
+    <a routerLink="/app">
+      <span class="hidden sm:inline-block">ZimPayments BackOffice</span>
+    </a>
+    <div>
+      <div class="flex items-center">
+
+        <button [matMenuTriggerFor]="menu" mat-icon-button>
+          <mat-icon>apps</mat-icon>
+        </button>
+      </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/app/account/profile">
+          <span>Change password</span>
+        </button>
+        <button (click)="logout.emit()" mat-menu-item>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>

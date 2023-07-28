@@ -1,0 +1,100 @@
+<h2 class="text-2xl font-medium p-0">Transaction Logs Report</h2>
+<p>Search and view transaction logs</p>
+<div class="mt-8">
+  <div class="px-1 pb-1">
+    <mat-card>
+      <mat-card-content>
+        <div class="w-full">
+          <form (ngSubmit)="search(0,10)" [formGroup]="form">
+
+            <div class="w-full flex flex-wrap gap-x-4">
+
+              <mat-form-field>
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input formControlName="startDate" matStartDate placeholder="Start date">
+                  <input formControlName="endDate" matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline">
+                <mat-label>Select Merchant</mat-label>
+                <mat-select formControlName="merchant">
+                  <mat-option *ngFor="let merchant of merchants" [value]="merchant.code">
+                    {{ merchant.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Select Product</mat-label>
+                <mat-select formControlName="product">
+                  <mat-option *ngFor="let product of products" [value]="product.name">
+                    {{ product.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Select Status</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option *ngFor="let status of status" [value]="status">
+                    {{ status }}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline">
+                <mat-label>Select Currency Code</mat-label>
+                <mat-select formControlName="currencyCode">
+                  <mat-option *ngFor="let currency of currency" [value]="currency">
+                    {{ currency }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+
+              <div class="flex items-center gap-3">
+                <button color="primary" mat-raised-button type="submit">
+                  <mat-icon>search</mat-icon>
+                  Get report
+                </button>
+                <button mat-raised-button type="reset">Reset</button>
+              </div>
+
+
+              <!--<div *ngFor="let product of products | filter:'filterString'">
+                <p>{{ product.name }}</p>
+              </div>-->
+
+
+            </div>
+
+          </form>
+
+          <ng-container *ngIf="tableData else spinner">
+            <div class="mt-6">
+              <zimpayments-data-table (clicked)="clicked.emit($event)" (download)="download" [clickable]="true"
+                                      [columns]="tableColumns"
+                                      [data]="tableData" [downloadable]="true">
+              </zimpayments-data-table>
+            </div>
+          </ng-container>
+
+
+          <ng-template #spinner>
+            <div class="mt-6 flex justify-center">
+              <mat-spinner diameter="50"></mat-spinner>
+            </div>
+          </ng-template>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
